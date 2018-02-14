@@ -14,6 +14,7 @@ class SearchContainer extends Component{
 	handleSubmit = (event) =>{
 		event.preventDefault();//previene la navegación
 		this.props.actions.searchEntities(this.input.value)
+		//searchAsyncEntities(this.input.value)-->para probar async
 	}
 
 	setInputRef = (element) =>{
