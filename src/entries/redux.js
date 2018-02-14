@@ -12,26 +12,48 @@ const initialState = [
     }
 ];
 
+const reducer = function(state,action){
+    switch(action.type){
+        case 'ADD_SONG':
+            return [...state, action.payload]
+        default:
+            return state;
+    }
+}
+
 const store = createStore(
-    (state)=>state,//reducer
+    reducer,//reducer
     initialState,//initialState
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),//enhancer
 );
 
-const playlist = store.getState();
-
 //elements
 const $form = document.getElementById('form');
-const $container = document.getElementById('playlist');
 
-//playlist
-playlist.forEach((item)=>{
-    const template = document.createElement('p');
-    template.textContent = item.title;
-    $container.appendChild(template);
-});
+//render
+function render(){
+    const $container = document.getElementById('playlist');
+    const playlist = store.getState();
+    $container.innerHTML='';
+    //playlist
+    playlist.forEach((item)=>{
+        const template = document.createElement('p');
+        template.textContent = item.title;
+        $container.appendChild(template);
+    });
+}
 
-//form
+//primera carga
+render();
+
+//este sera el manejador del suscribe
+function handleChange(){
+    render();
+}
+
+//para actualizar el UI desde el state
+store.subscribe(handleChange);
+
 $form.addEventListener('submit', handleSubmit);
 
 function handleSubmit (event){

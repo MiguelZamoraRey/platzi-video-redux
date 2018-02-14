@@ -1,5 +1,9 @@
 import React, {Component} from 'react';
 import Search from '../components/search.js';
+import {connect} from 'react-redux';
+//import {searchEntities} from '../../actions/index';-->bindeo
+import {bindActionCreators} from 'redux';
+import * as actions from '../../actions/index';
 
 class SearchContainer extends Component{
 	//para el valor por defecto
@@ -9,7 +13,7 @@ class SearchContainer extends Component{
 
 	handleSubmit = (event) =>{
 		event.preventDefault();//previene la navegación
-		console.log(this.input.value, 'submit');
+		this.props.actions.searchEntities(this.input.value)
 	}
 
 	setInputRef = (element) =>{
@@ -34,4 +38,13 @@ class SearchContainer extends Component{
 	}
 }
 
-export default SearchContainer;
+function mapDispatchToProps(dispatch){
+	return {
+		//actions: bindActionCreators(acciones, dispatch)
+		actions: bindActionCreators(actions, dispatch)
+	}
+}
+
+//no le pasamos parametro de las props porque no lo necesita,
+//	pero si que estamos almacenando el metodo dispatch del store en this.props
+export default connect(null,mapDispatchToProps)(SearchContainer);

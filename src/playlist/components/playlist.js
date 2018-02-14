@@ -1,5 +1,5 @@
 import React from 'react';
-import Media from './media.js';
+import MediaContainer from '../container/media';
 import './playlist.css';
 
 function PlayList(props){
@@ -7,12 +7,12 @@ function PlayList(props){
 		return (
 			<div className="PlayList">
 				{
-					props.playlist.map((item) => {
+					props.playlist.map((mediaId) => {
 						return(
-						 <Media 
+						 <MediaContainer 
 						 	openModal = {props.handleOpenModal}
-							key = {item.id} 
-							{...item}
+							key = {mediaId} 
+							id={mediaId}
 						/>)
 					})
 				}
